@@ -5,14 +5,14 @@ run_analysis <- function() {
   download_dataset()
   
   #get all train information
-  train_measures <- tbl_df(read.table(unzip("dataset.zip", "UCI HAR Dataset/train/X_train.txt")))
-  train_activity <- tbl_df(read.table(unzip("dataset.zip", "UCI HAR Dataset/train/y_train.txt")))
-  train_subject <- tbl_df(read.table(unzip("dataset.zip", "UCI HAR Dataset/train/subject_train.txt")))
+  train_measures <- as_tibble(read.table(unzip("dataset.zip", "UCI HAR Dataset/train/X_train.txt")))
+  train_activity <- as_tibble(read.table(unzip("dataset.zip", "UCI HAR Dataset/train/y_train.txt")))
+  train_subject <- as_tibble(read.table(unzip("dataset.zip", "UCI HAR Dataset/train/subject_train.txt")))
   
   #get all test information
-  test_measures <- tbl_df(read.table(unzip("dataset.zip", "UCI HAR Dataset/test/X_test.txt")))
-  test_activity <- tbl_df(read.table(unzip("dataset.zip", "UCI HAR Dataset/test/y_test.txt")))
-  test_subject <- tbl_df(read.table(unzip("dataset.zip", "UCI HAR Dataset/test/subject_test.txt")))
+  test_measures <- as_tibble(read.table(unzip("dataset.zip", "UCI HAR Dataset/test/X_test.txt")))
+  test_activity <- as_tibble(read.table(unzip("dataset.zip", "UCI HAR Dataset/test/y_test.txt")))
+  test_subject <- as_tibble(read.table(unzip("dataset.zip", "UCI HAR Dataset/test/subject_test.txt")))
   
   #get features names
   features_names <- read.table(unzip("dataset.zip", "UCI HAR Dataset/features.txt"))
@@ -31,7 +31,7 @@ run_analysis <- function() {
   current_names <- sub(pattern = "^f", "frequency-", current_names)
   current_names <- sub(pattern = "std", "standard-deviation", current_names)
   current_names <- sub(pattern = "Acc", "-acceleration", current_names)
-  current_names <- sub(pattern = "Gyro", "-gyro", current_names)
+  current_names <- sub(pattern = "Gyro", "-gyroscope", current_names)
   current_names <- sub(pattern = "Jerk", "-jerk", current_names)
   current_names <- sub(pattern = "Mag", "-magnitude", current_names)
   current_names <- tolower(current_names)  
@@ -63,7 +63,7 @@ download_dataset <- function() {
 }
 
 average_dataframe <- function(df) {
-  #with the average of each variable for each activity and each subject.
+  #the average of each variable for each activity and each subject.
   new_df <- df %>%
     group_by(subject, activities) %>%
     summarize(across(.fns=mean))
