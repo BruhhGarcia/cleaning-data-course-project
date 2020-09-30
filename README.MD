@@ -36,3 +36,5 @@ In the original data set columns names are confusing and not very descriptive. I
 ### Step 3: Generating a new data set
 
 In this step the objective was to generate a new data set with the average of each variable for each activity and each subject. To achieve this two dplyr functions was used: group by and summarize. First complete_df was grouped by subject and activity then summarize function was applied to calculate the mean of each measure.
+
+The new data set follows the principles of a tidy data: each variable should be in one column; each different observation of that variable should be in a different row; first row indicate variable names and it is human readable.
